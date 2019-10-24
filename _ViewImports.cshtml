@@ -1,0 +1,18 @@
+﻿@using Penguin.Reflection
+@using Penguin.Cms.Entities
+@using Microsoft.AspNetCore.Html
+@using Penguin.Cms.Web.Extensions
+@using Penguin.Extensions.Collections;
+@using Penguin.Security.Abstractions.Extensions
+@using Penguin.Extensions.Strings
+@using Penguin.Security.Abstractions.Interfaces
+@using Penguin.Security.Abstractions
+@using Penguin.Cms.Images
+@using Penguin.Reflection.Serialization.Abstractions.Interfaces
+
+
+@inject IServiceProvider ServiceProvider
+@inject IUserSession UserSession
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Penguin.Cms.Modules.Core

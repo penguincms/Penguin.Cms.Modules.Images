@@ -1,0 +1,6 @@
+﻿@model Image
+@{
+    Layout = null;
+}
+
+<img src="@($"/Image/GetThumb/{Model._Id}")" height="@Model.ThumbHeight" width="@Model.ThumbWidth" class="grid-item" itemprop="thumbnail" alt="@Model.Name">
