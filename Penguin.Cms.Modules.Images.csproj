@@ -21,11 +21,9 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.0.0" />
     <PackageReference Include="Penguin.Cms.Files" Version="2.0.2" />
     <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.0" />
+    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.0" />
     <PackageReference Include="Penguin.Messaging.Application" Version="2.1.0" />
     <PackageReference Include="Penguin.Messaging.Persistence" Version="2.2.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Penguin.Cms.Modules.Dynamic\Penguin.Cms.Modules.Dynamic.csproj" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
