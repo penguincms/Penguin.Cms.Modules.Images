@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Penguin.Cms.Modules.Images.Local</name>
+        <name>Penguin.Cms.Modules.Images</name>
     </assembly>
     <members>
         <member name="P:Penguin.Cms.Modules.Images.Constants.Roles.ImageManager">
