@@ -7,12 +7,14 @@
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Cms.Modules.Images</PackageProjectUrl>
     <Version>1.0.0</Version>
     <Description>Not Available</Description>
+    <AssemblyName>Penguin.Cms.Modules.Images</AssemblyName>
+    <RootNamespace>Penguin.Cms.Modules.Images</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
-    <PackageReference Include="Penguin.Cms.Files" Version="2.0.3-T9M1HHH" />
-    <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.1-T9M1HHH" />
-    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9M1K2Y" />
+    <PackageReference Include="Penguin.Cms.Files" Version="2.0.3-T9M2XAX" />
+    <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.1-T9M2XAX" />
+    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9M2XAX" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
