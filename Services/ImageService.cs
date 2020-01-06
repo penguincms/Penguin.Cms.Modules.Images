@@ -9,6 +9,7 @@ using Penguin.Messaging.Abstractions.Interfaces;
 using Penguin.Messaging.Persistence.Messages;
 using Penguin.Persistence.Abstractions.Interfaces;
 using Penguin.Security.Abstractions.Interfaces;
+using Penguin.Web.Data;
 using System.Linq;
 
 namespace Penguin.Cms.Modules.Images.Services
@@ -43,12 +44,16 @@ namespace Penguin.Cms.Modules.Images.Services
                 return;
             }
 
-            Image newImage = this.ImageRepository.GetByUri(target.FullName).FirstOrDefault() ?? new Image(target.FullName);
-            newImage.Refresh();
+            if (MimeMappings.GetMimeType(System.IO.Path.GetExtension(target.FullName)).StartsWith("image/", System.StringComparison.OrdinalIgnoreCase))
+            {
 
-            SecurityProvider.ClonePermissions(target, newImage);
+                Image newImage = this.ImageRepository.GetByUri(target.FullName).FirstOrDefault() ?? new Image(target.FullName);
+                newImage.Refresh();
 
-            this.ImageRepository.AddOrUpdate(newImage);
+                SecurityProvider.ClonePermissions(target, newImage);
+
+                this.ImageRepository.AddOrUpdate(newImage);
+            }
         }
     }
 }
