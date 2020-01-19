@@ -13,8 +13,8 @@
   <ItemGroup>
     <Content Remove="wwwroot\**\*" />
     <PackageReference Include="Penguin.Cms.Files" Version="2.0.3-T9MNBFG" />
-    <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.1-T9MNBFG" />
-    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9P1VVS" />
+    <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.1-T9PMIQP" />
+    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9Q96US" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
