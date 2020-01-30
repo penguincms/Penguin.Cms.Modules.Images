@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Penguin.Cms.Modules.Images</name>
+    </assembly>
+    <members>
+        <member name="P:Penguin.Cms.Modules.Images.Constants.Roles.ImageManager">
+            <summary>
+            This role allows a user or group to access the administration panel
+            </summary>
+        </member>
+        <member name="P:Penguin.Cms.Modules.Images.Constants.Strings.RoleStrings.ImageManager">
+            <summary>
+            This role allows a user or group to access the administration panel
+            </summary>
+        </member>
+    </members>
+</doc>
