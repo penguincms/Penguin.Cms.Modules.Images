@@ -9,7 +9,6 @@ using Penguin.Cms.Modules.Dynamic.Areas.Admin.Controllers;
 using Penguin.Cms.Modules.Images.Constants.Strings;
 using Penguin.Cms.Modules.Images.Services;
 using Penguin.Persistence.Abstractions.Interfaces;
-using Penguin.Security.Abstractions.Attributes;
 using Penguin.Security.Abstractions.Interfaces;
 using Penguin.Web.Data;
 using Penguin.Web.Security.Attributes;
@@ -32,11 +31,11 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
 
         public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, ISecurityProvider<Image> securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider)
         {
-            ImageService = imageService;
-            SecurityProvider = securityProvider;
-            ErrorRepository = errorRepository;
-            ImageRepository = imageRepository;
-            DatabaseFileRepository = databaseFileRepository;
+            this.ImageService = imageService;
+            this.SecurityProvider = securityProvider;
+            this.ErrorRepository = errorRepository;
+            this.ImageRepository = imageRepository;
+            this.DatabaseFileRepository = databaseFileRepository;
         }
 
         public ActionResult ImportImages(string FilePath)
@@ -48,7 +47,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
         [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         public List<string> ScrapeImages(string FilePath)
         {
-            if (DatabaseFileRepository is null)
+            if (this.DatabaseFileRepository is null)
             {
                 return new List<string>();
             }
@@ -57,7 +56,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
 
             DirectoryInfo TargetPath = new DirectoryInfo(FilePath);
 
-            using (IWriteContext context = DatabaseFileRepository.WriteContext())
+            using (IWriteContext context = this.DatabaseFileRepository.WriteContext())
             {
                 output.Add($"Directory: {TargetPath}");
 
@@ -100,11 +99,11 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                     try
                     {
                         output.Add($"Adding New Image: {thisFile.FullName}");
-                        ImageService.ImportImage(thisFile);
+                        this.ImageService.ImportImage(thisFile);
                     }
                     catch (Exception ex)
                     {
-                        ErrorRepository.TryAdd(ex);
+                        this.ErrorRepository.TryAdd(ex);
                         output.Add($"Error adding image: {thisFile.FullName}");
                     }
                 }
@@ -119,7 +118,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
             {
                 Image thisImage;
 
-                using (IWriteContext context = ImageRepository.WriteContext())
+                using (IWriteContext context = this.ImageRepository.WriteContext())
                 {
                     byte[] array;
                     // save the image path path to the database or you can send image
@@ -138,7 +137,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
 
                     if (Public)
                     {
-                        SecurityProvider?.SetPublic(thisImage);
+                        this.SecurityProvider?.SetPublic(thisImage);
                     }
 
                     thisImage.Refresh();

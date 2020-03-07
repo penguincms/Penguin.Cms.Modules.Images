@@ -20,7 +20,7 @@ namespace Penguin.Cms.Modules.Images.Controllers
 
         public ImageController(ImageRepository imageRepository)
         {
-            ImageRepository = imageRepository;
+            this.ImageRepository = imageRepository;
         }
 
         public ActionResult DisplayThumb(Image i)
@@ -36,11 +36,14 @@ namespace Penguin.Cms.Modules.Images.Controllers
         }
 
         [DynamicPropertyHandler(DisplayContexts.Edit, typeof(Image), nameof(Image.Thumb))]
-        public ActionResult DynamicDisplayThumb(IMetaObject Model) => this.View(Model);
+        public ActionResult DynamicDisplayThumb(IMetaObject Model)
+        {
+            return this.View(Model);
+        }
 
         public ActionResult GetFullImage(int id)
         {
-            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No full found for image {id}");
 
@@ -54,7 +57,7 @@ namespace Penguin.Cms.Modules.Images.Controllers
 
         public ActionResult GetImage(int id)
         {
-            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No Content found for image {id}");
 
@@ -68,7 +71,7 @@ namespace Penguin.Cms.Modules.Images.Controllers
 
         public ActionResult GetThumb(int id)
         {
-            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No Thumb found for image {id}");
 
