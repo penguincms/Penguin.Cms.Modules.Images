@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1.1" />
     <PackageReference Include="Penguin.Cms.Files" Version="2.0.3-T9UEEAT" />
     <PackageReference Include="Penguin.Cms.Images.Repositories" Version="1.0.1-T9UEEAT" />
-    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9UEEAT" />
+    <PackageReference Include="Penguin.Cms.Modules.Dynamic" Version="1.0.1-T9UEQUJ" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
