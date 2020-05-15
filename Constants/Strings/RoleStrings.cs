@@ -9,7 +9,7 @@ namespace Penguin.Cms.Modules.Images.Constants.Strings
         /// </summary>
         public static NameDescriptionPair ImageManager { get; } = new NameDescriptionPair()
         {
-            Name = RoleNames.ImageManager,
+            Name = RoleNames.IMAGE_MANAGER,
             Description = "This role is grants access to Image Management portions of the web site"
         };
     }

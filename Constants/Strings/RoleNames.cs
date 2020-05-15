@@ -2,6 +2,6 @@
 {
     public static class RoleNames
     {
-        public const string ImageManager = "Image Manager";
+        public const string IMAGE_MANAGER = "Image Manager";
     }
 }

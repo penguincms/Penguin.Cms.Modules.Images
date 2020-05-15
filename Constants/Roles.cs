@@ -10,7 +10,7 @@ namespace Penguin.Cms.Modules.Images.Constants
         /// </summary>
         public static Role ImageManager { get; } = new Role()
         {
-            ExternalId = RoleNames.ImageManager,
+            ExternalId = RoleNames.IMAGE_MANAGER,
             Description = RoleStrings.ImageManager.Description
         };
     }

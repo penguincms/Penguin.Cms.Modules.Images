@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
 {
-    [RequiresRole(RoleNames.ImageManager)]
+    [RequiresRole(RoleNames.IMAGE_MANAGER)]
     public partial class ImageController : ObjectManagementController<Image>
     {
         protected IRepository<DatabaseFile>? DatabaseFileRepository { get; set; }
