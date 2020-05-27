@@ -29,7 +29,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
         protected ImageService ImageService { get; set; }
         protected ISecurityProvider<Image> SecurityProvider { get; set; }
 
-        public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, ISecurityProvider<Image> securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider)
+        public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, IUserSession userSession, ISecurityProvider<Image> securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider, userSession)
         {
             this.ImageService = imageService;
             this.SecurityProvider = securityProvider;
