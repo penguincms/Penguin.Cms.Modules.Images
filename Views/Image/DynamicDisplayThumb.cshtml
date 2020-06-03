@@ -1,6 +1,6 @@
 ﻿@model IMetaObject
 
 @{
-    int ImageId = int.Parse(Model.GetParent()[nameof(Entity._Id)].Value);
+    int ImageId = int.Parse(Model.Parent[nameof(Entity._Id)].Value);
 }
 <img src="/Image/GetThumb/@ImageId" />
