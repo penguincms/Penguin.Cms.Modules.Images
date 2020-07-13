@@ -31,6 +31,11 @@ namespace Penguin.Cms.Modules.Images.Services
 
         public void AcceptMessage(Creating<DatabaseFile> message)
         {
+            if (message is null)
+            {
+                throw new System.ArgumentNullException(nameof(message));
+            }
+
             if (this.ConfigurationProvider.GetBool(ConfigurationNames.IMPORT_IMAGES_AUTOMATICALLY))
             {
                 this.ImportImage(message.Target);
@@ -39,6 +44,11 @@ namespace Penguin.Cms.Modules.Images.Services
 
         public void ImportImage(DatabaseFile target)
         {
+            if (target is null)
+            {
+                throw new System.ArgumentNullException(nameof(target));
+            }
+
             if (this.DatabaseFileRepository is null)
             {
                 return;
