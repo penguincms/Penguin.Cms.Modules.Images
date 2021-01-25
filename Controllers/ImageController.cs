@@ -13,7 +13,6 @@ using Drawing = System.Drawing;
 
 namespace Penguin.Cms.Modules.Images.Controllers
 {
-    [SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters")]
     public partial class ImageController : Controller
     {
         protected ImageRepository ImageRepository { get; set; }
