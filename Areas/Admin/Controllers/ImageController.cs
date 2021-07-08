@@ -44,7 +44,6 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
             return this.View("IndexOutput", output);
         }
 
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types")]
         public List<string> ScrapeImages(string FilePath)
         {
             if (this.DatabaseFileRepository is null)

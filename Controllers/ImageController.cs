@@ -6,7 +6,6 @@ using Penguin.Images.Extensions;
 using Penguin.Persistence.Abstractions.Attributes.Control;
 using Penguin.Reflection.Serialization.Abstractions.Interfaces;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using Drawing = System.Drawing;
