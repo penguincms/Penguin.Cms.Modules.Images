@@ -34,10 +34,7 @@ namespace Penguin.Cms.Modules.Images.Controllers
         }
 
         [DynamicPropertyHandler(DisplayContexts.Edit, typeof(Image), nameof(Image.Thumb))]
-        public ActionResult DynamicDisplayThumb(IMetaObject Model)
-        {
-            return this.View(Model);
-        }
+        public ActionResult DynamicDisplayThumb(IMetaObject Model) => this.View(Model);
 
         public ActionResult GetFullImage(int id)
         {
