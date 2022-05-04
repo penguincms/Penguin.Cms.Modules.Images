@@ -88,7 +88,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                         }
 
                         this.ImageRepository.Delete(thisImage);
-                        imageFiles.Remove(match);
+                        _ = imageFiles.Remove(match);
                     }
                 }
 
@@ -101,7 +101,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                     }
                     catch (Exception ex)
                     {
-                        this.ErrorRepository.TryAdd(ex);
+                        _ = this.ErrorRepository.TryAdd(ex);
                         output.Add($"Error adding image: {thisFile.FullName}");
                     }
                 }
