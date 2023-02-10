@@ -23,9 +23,13 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
     public partial class ImageController : ObjectManagementController<Image>
     {
         protected IRepository<DatabaseFile>? DatabaseFileRepository { get; set; }
+
         protected IRepository<AuditableError> ErrorRepository { get; set; }
+
         protected ImageRepository ImageRepository { get; set; }
+
         protected ImageService ImageService { get; set; }
+
         protected ISecurityProvider<Image> SecurityProvider { get; set; }
 
         public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, IUserSession userSession, ISecurityProvider<Image>? securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider, userSession)

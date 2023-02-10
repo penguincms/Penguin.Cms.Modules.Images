@@ -17,8 +17,11 @@ namespace Penguin.Cms.Modules.Images.Services
     public class ImageService : IMessageHandler<Creating<DatabaseFile>>
     {
         public IProvideConfigurations ConfigurationProvider { get; set; }
+
         public IRepository<DatabaseFile>? DatabaseFileRepository { get; set; }
+
         public ImageRepository ImageRepository { get; set; }
+
         public ISecurityProvider<Entity> SecurityProvider { get; set; }
 
         public ImageService(ImageRepository imageRepository, IProvideConfigurations configurationProvider, ISecurityProvider<Entity> securityProvider, IRepository<DatabaseFile>? databaseFileRepository = null)
