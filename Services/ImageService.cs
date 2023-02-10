@@ -23,10 +23,10 @@ namespace Penguin.Cms.Modules.Images.Services
 
         public ImageService(ImageRepository imageRepository, IProvideConfigurations configurationProvider, ISecurityProvider<Entity> securityProvider, IRepository<DatabaseFile>? databaseFileRepository = null)
         {
-            this.ImageRepository = imageRepository;
-            this.ConfigurationProvider = configurationProvider;
-            this.DatabaseFileRepository = databaseFileRepository;
-            this.SecurityProvider = securityProvider;
+            ImageRepository = imageRepository;
+            ConfigurationProvider = configurationProvider;
+            DatabaseFileRepository = databaseFileRepository;
+            SecurityProvider = securityProvider;
         }
 
         public void AcceptMessage(Creating<DatabaseFile> message)
@@ -36,9 +36,9 @@ namespace Penguin.Cms.Modules.Images.Services
                 throw new System.ArgumentNullException(nameof(message));
             }
 
-            if (this.ConfigurationProvider.GetBool(ConfigurationNames.IMPORT_IMAGES_AUTOMATICALLY))
+            if (ConfigurationProvider.GetBool(ConfigurationNames.IMPORT_IMAGES_AUTOMATICALLY))
             {
-                this.ImportImage(message.Target);
+                ImportImage(message.Target);
             }
         }
 
@@ -49,19 +49,19 @@ namespace Penguin.Cms.Modules.Images.Services
                 throw new System.ArgumentNullException(nameof(target));
             }
 
-            if (this.DatabaseFileRepository is null)
+            if (DatabaseFileRepository is null)
             {
                 return;
             }
 
             if (MimeMappings.GetMimeType(System.IO.Path.GetExtension(target.FullName)).StartsWith("image/", System.StringComparison.OrdinalIgnoreCase))
             {
-                Image newImage = this.ImageRepository.GetByUri(target.FullName).FirstOrDefault() ?? new Image(target.FullName);
+                Image newImage = ImageRepository.GetByUri(target.FullName).FirstOrDefault() ?? new Image(target.FullName);
                 newImage.Refresh();
 
-                this.SecurityProvider.ClonePermissions(target, newImage);
+                SecurityProvider.ClonePermissions(target, newImage);
 
-                this.ImageRepository.AddOrUpdate(newImage);
+                ImageRepository.AddOrUpdate(newImage);
             }
         }
     }

@@ -28,33 +28,33 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
         protected ImageService ImageService { get; set; }
         protected ISecurityProvider<Image> SecurityProvider { get; set; }
 
-        public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, IUserSession userSession, ISecurityProvider<Image> securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider, userSession)
+        public ImageController(IRepository<AuditableError> errorRepository, ImageRepository imageRepository, IServiceProvider serviceProvider, ImageService imageService, IUserSession userSession, ISecurityProvider<Image>? securityProvider = null, IRepository<DatabaseFile>? databaseFileRepository = null) : base(serviceProvider, userSession)
         {
-            this.ImageService = imageService;
-            this.SecurityProvider = securityProvider;
-            this.ErrorRepository = errorRepository;
-            this.ImageRepository = imageRepository;
-            this.DatabaseFileRepository = databaseFileRepository;
+            ImageService = imageService;
+            SecurityProvider = securityProvider;
+            ErrorRepository = errorRepository;
+            ImageRepository = imageRepository;
+            DatabaseFileRepository = databaseFileRepository;
         }
 
         public ActionResult ImportImages(string FilePath)
         {
-            List<string> output = this.ScrapeImages(FilePath);
-            return this.View("IndexOutput", output);
+            List<string> output = ScrapeImages(FilePath);
+            return View("IndexOutput", output);
         }
 
         public List<string> ScrapeImages(string FilePath)
         {
-            if (this.DatabaseFileRepository is null)
+            if (DatabaseFileRepository is null)
             {
                 return new List<string>();
             }
 
-            List<string> output = new List<string>();
+            List<string> output = new();
 
-            DirectoryInfo TargetPath = new DirectoryInfo(FilePath);
+            DirectoryInfo TargetPath = new(FilePath);
 
-            using (IWriteContext context = this.DatabaseFileRepository.WriteContext())
+            using (IWriteContext context = DatabaseFileRepository.WriteContext())
             {
                 output.Add($"Directory: {TargetPath}");
 
@@ -63,11 +63,11 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                     TargetPath.Create();
                 }
 
-                List<DatabaseFile> imageFiles = this.DatabaseFileRepository.Where(f => f.FilePath == FilePath && !f.IsDirectory && MimeMappings.GetType(f.FileName) == MimeMappings.FileType.Image).ToList();
+                List<DatabaseFile> imageFiles = DatabaseFileRepository.Where(f => f.FilePath == FilePath && !f.IsDirectory && MimeMappings.GetType(f.FileName) == MimeMappings.FileType.Image).ToList();
 
                 output.Add($"Total Images: {imageFiles.Count}");
 
-                List<Image> databaseImages = this.ImageRepository.Get().ToList();
+                List<Image> databaseImages = ImageRepository.Get().ToList();
 
                 output.Add($"Total Saved Images: {databaseImages.Count}");
 
@@ -78,7 +78,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                     {
                         output.Add($"Deleting Missing Image: {thisImage.Uri}");
 
-                        this.ImageRepository.Delete(thisImage);
+                        ImageRepository.Delete(thisImage);
                     }
                     else
                     {
@@ -87,7 +87,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                             output.Add($"Re-adding Image: {match.FullName}");
                         }
 
-                        this.ImageRepository.Delete(thisImage);
+                        ImageRepository.Delete(thisImage);
                         _ = imageFiles.Remove(match);
                     }
                 }
@@ -97,11 +97,11 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                     try
                     {
                         output.Add($"Adding New Image: {thisFile.FullName}");
-                        this.ImageService.ImportImage(thisFile);
+                        ImageService.ImportImage(thisFile);
                     }
                     catch (Exception ex)
                     {
-                        _ = this.ErrorRepository.TryAdd(ex);
+                        _ = ErrorRepository.TryAdd(ex);
                         output.Add($"Error adding image: {thisFile.FullName}");
                     }
                 }
@@ -116,13 +116,13 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
             {
                 Image thisImage;
 
-                using (IWriteContext context = this.ImageRepository.WriteContext())
+                using (IWriteContext context = ImageRepository.WriteContext())
                 {
                     byte[] array;
                     // save the image path path to the database or you can send image
                     // directly to database
                     // in-case if you want to store byte[] ie. for DB
-                    using (MemoryStream ms = new MemoryStream())
+                    using (MemoryStream ms = new())
                     {
                         upload.OpenReadStream().CopyTo(ms);
                         array = ms.GetBuffer();
@@ -135,16 +135,16 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
 
                     if (Public)
                     {
-                        this.SecurityProvider?.SetPublic(thisImage);
+                        SecurityProvider?.SetPublic(thisImage);
                     }
 
                     thisImage.Refresh();
 
-                    this.ImageRepository.AddOrUpdate(thisImage);
+                    ImageRepository.AddOrUpdate(thisImage);
                 }
-                thisImage = this.ImageRepository.Find(thisImage.Guid);
+                thisImage = ImageRepository.Find(thisImage.Guid);
 
-                return this.Json(new
+                return Json(new
                 {
                     uploaded = 1,
                     fileName = upload.FileName,
@@ -152,7 +152,7 @@ namespace Penguin.Cms.Modules.Images.Areas.Admin.Controllers
                 });
             }
             // after successfully uploading redirect the user
-            return this.Json(new
+            return Json(new
             {
                 uploaded = 0
             });

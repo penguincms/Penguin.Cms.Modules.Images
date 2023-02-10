@@ -18,30 +18,23 @@ namespace Penguin.Cms.Modules.Images.Controllers
 
         public ImageController(ImageRepository imageRepository)
         {
-            this.ImageRepository = imageRepository;
+            ImageRepository = imageRepository;
         }
 
         public ActionResult DisplayThumb(Image i)
         {
-            if (i != null)
-            {
-                return this.View("DisplayThumb", i);
-            }
-            else
-            {
-                return this.Content("No thumb found");
-            }
+            return i != null ? View("DisplayThumb", i) : Content("No thumb found");
         }
 
         [DynamicPropertyHandler(DisplayContexts.Edit, typeof(Image), nameof(Image.Thumb))]
         public ActionResult DynamicDisplayThumb(IMetaObject Model)
         {
-            return this.View(Model);
+            return View(Model);
         }
 
         public ActionResult GetFullImage(int id)
         {
-            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No full found for image {id}");
 
@@ -50,12 +43,12 @@ namespace Penguin.Cms.Modules.Images.Controllers
             //    return this.ReturnNSFW(thisImageData);
             //}
 
-            return this.ReturnImage(thisImageData);
+            return ReturnImage(thisImageData);
         }
 
         public ActionResult GetImage(int id)
         {
-            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No Content found for image {id}");
 
@@ -64,12 +57,12 @@ namespace Penguin.Cms.Modules.Images.Controllers
             //    return this.ReturnNSFW(thisImageData);
             //}
 
-            return this.ReturnImage(thisImageData);
+            return ReturnImage(thisImageData);
         }
 
         public ActionResult GetThumb(int id)
         {
-            Image thisImage = this.ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
+            Image thisImage = ImageRepository.Find(id) ?? throw new NullReferenceException($"Can not find image with Id {id}");
 
             ImageData thisImageData = thisImage.Full ?? throw new Exception($"No Thumb found for image {id}");
 
@@ -78,7 +71,7 @@ namespace Penguin.Cms.Modules.Images.Controllers
             //    return this.ReturnNSFW(thisImageData);
             //}
 
-            return this.ReturnImage(thisImageData);
+            return ReturnImage(thisImageData);
         }
 
         public ActionResult ReturnImage(ImageData thisImage)
@@ -86,11 +79,11 @@ namespace Penguin.Cms.Modules.Images.Controllers
             if (thisImage != null && thisImage.Data.Length >= 10)
             {
                 byte[] imageData = thisImage.Data;
-                return this.File(imageData, thisImage.Mime);
+                return File(imageData, thisImage.Mime);
             }
             else
             {
-                return this.Redirect("/Content/Image/static.jpg");
+                return Redirect("/Content/Image/static.jpg");
             }
         }
 
@@ -106,13 +99,13 @@ namespace Penguin.Cms.Modules.Images.Controllers
                     throw new Exception("Placeholder image stream not found");
                 }
 
-                using Drawing.Bitmap original = new Drawing.Bitmap(_imageStream);
-                using Drawing.Bitmap resized = new Drawing.Bitmap(original, new Drawing.Size(thisImage.Width, thisImage.Height));
-                return this.File(resized.ToByteArray(), "image/jpeg");
+                using Drawing.Bitmap original = new(_imageStream);
+                using Drawing.Bitmap resized = new(original, new Drawing.Size(thisImage.Width, thisImage.Height));
+                return File(resized.ToByteArray(), "image/jpeg");
             }
             else
             {
-                return this.Redirect("/Content/Image/placeholder.jpg");
+                return Redirect("/Content/Image/placeholder.jpg");
             }
         }
     }
